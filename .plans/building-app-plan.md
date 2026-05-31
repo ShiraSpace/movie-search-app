@@ -51,17 +51,19 @@ All UI components must match the mockup exactly. Use CSS custom properties defin
 
 ## Coding Standards (enforced throughout)
 
-- **Constants**: every component gets a co-located `constants.ts` — test IDs and content strings live there; both the
-  component and its test import from it
-- **Tailwind CSS**: utility classes only, no inline `style={{}}` props; CSS variables via `bg-(--token)` shorthand;
-  prefer scale values (`h-15`) over arbitrary values (`h-[60px]`)
+- **Constants**: every component gets a co-located `constants.ts` — test IDs and content strings live there; both the component and its test import from it
+- **Tailwind CSS**: utility classes only, no inline `style={{}}` props; CSS variables via `bg-(--token)` shorthand; prefer scale values (`h-15`) over arbitrary values (`h-[60px]`)
 
-## Phase 0 — Foundation
+---
 
-- [ ] Add ESLint + eslint-plugin-prettier, create `.eslintrc`
-- [ ] Add `OMDB_API_KEY` to `.env.local`, create `.env.example`
-- [ ] Create `src/db/watchlist.json` seeded as `[]`
-- [ ] Add minimal Header + nav to `src/app/layout.tsx`
+## Phase 0 — Foundation ✅
+
+- [x] Add ESLint + eslint-plugin-prettier, `eslint.config.mjs`
+- [x] Add `OMDB_API_KEY` to `.env.local`, create `.env.example`
+- [x] Create `src/db/watchlist.json` seeded as `[]`
+- [x] Add Header + nav to `src/app/layout.tsx`
+- [x] Set up testing library (`@testing-library/react`, `jest-dom`)
+- [x] Header component with constants, tests, and Tailwind-only styling
 
 ## Phase 1 — Features (parallel)
 
