@@ -1,0 +1,9 @@
+'use client';
+
+export default function Home() {
+  return (
+    <main className="min-h-screen p-8">
+      <h1 className="text-2xl font-bold">App</h1>
+    </main>
+  );
+}
