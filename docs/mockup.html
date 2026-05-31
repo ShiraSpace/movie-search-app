@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MovieSearch — Mockup</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0f0f13;
+        --surface: #18181f;
+        --surface-hover: #21212b;
+        --border: #2a2a36;
+        --accent: #e2b04a;
+        --accent-dim: rgba(226, 176, 74, 0.12);
+        --text: #f0f0f5;
+        --text-muted: #8888aa;
+        --danger: #e05555;
+        --danger-dim: rgba(224, 85, 85, 0.12);
+        --radius: 10px;
+        --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ── Header ── */
+      header {
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        padding: 0 2rem;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .logo {
+        font-size: 1.2rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--accent);
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .logo span {
+        color: var(--text);
+      }
+
+      nav a {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding: 6px 14px;
+        border-radius: 6px;
+        transition:
+          color 0.15s,
+          background 0.15s;
+        cursor: pointer;
+      }
+      nav a:hover,
+      nav a.active {
+        color: var(--text);
+        background: var(--surface-hover);
+      }
+
+      /* ── Page switcher (mockup only) ── */
+      .page-tabs {
+        background: var(--border);
+        display: flex;
+        gap: 2px;
+        padding: 2px;
+        border-radius: 8px;
+        position: fixed;
+        bottom: 1.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 200;
+        box-shadow: var(--shadow);
+      }
+      .page-tabs button {
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        font-size: 0.78rem;
+        font-weight: 600;
+        padding: 7px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.15s;
+        letter-spacing: 0.02em;
+      }
+      .page-tabs button.active {
+        background: var(--surface);
+        color: var(--text);
+      }
+
+      /* ── Pages ── */
+      .page {
+        display: none;
+        flex: 1;
+      }
+      .page.visible {
+        display: flex;
+        flex-direction: column;
+      }
+
+      main {
+        flex: 1;
+        max-width: 1100px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 2.5rem 1.5rem 6rem;
+      }
+
+      /* ── Search page ── */
+      .search-hero {
+        text-align: center;
+        padding: 3rem 0 2.5rem;
+      }
+      .search-hero h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.4rem;
+      }
+      .search-hero p {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+      .search-bar {
+        display: flex;
+        gap: 10px;
+        max-width: 540px;
+        margin: 1.8rem auto 0;
+      }
+      .search-bar input {
+        flex: 1;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        color: var(--text);
+        font-size: 0.95rem;
+        padding: 0 1rem;
+        height: 44px;
+        outline: none;
+        transition: border-color 0.15s;
+      }
+      .search-bar input:focus {
+        border-color: var(--accent);
+      }
+      .search-bar input::placeholder {
+        color: var(--text-muted);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 44px;
+        padding: 0 1.2rem;
+        border-radius: var(--radius);
+        border: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          opacity 0.15s,
+          transform 0.1s;
+      }
+      .btn:active {
+        transform: scale(0.97);
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: #111;
+      }
+      .btn-primary:hover {
+        opacity: 0.9;
+      }
+      .btn-ghost {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        color: var(--text);
+      }
+      .btn-ghost:hover {
+        background: var(--surface-hover);
+      }
+      .btn-danger {
+        background: var(--danger-dim);
+        border: 1px solid transparent;
+        color: var(--danger);
+        font-size: 0.82rem;
+        height: 34px;
+        padding: 0 0.9rem;
+      }
+      .btn-danger:hover {
+        background: var(--danger);
+        color: #fff;
+      }
+
+      .results-label {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        margin-bottom: 1.2rem;
+      }
+      .results-label strong {
+        color: var(--text);
+      }
+
+      .movie-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1.2rem;
+      }
+
+      .movie-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          border-color 0.15s,
+          box-shadow 0.15s;
+      }
+      .movie-card:hover {
+        transform: translateY(-3px);
+        border-color: var(--accent);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      }
+      .movie-card img,
+      .movie-card .poster-placeholder {
+        width: 100%;
+        aspect-ratio: 2/3;
+        object-fit: cover;
+        display: block;
+      }
+      .poster-placeholder {
+        background: var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-muted);
+        font-size: 2rem;
+      }
+      .movie-card-info {
+        padding: 0.75rem;
+      }
+      .movie-card-title {
+        font-size: 0.85rem;
+        font-weight: 600;
+        line-height: 1.3;
+        margin-bottom: 0.2rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .movie-card-year {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+      }
+
+      /* ── Detail page ── */
+      .detail-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        cursor: pointer;
+        margin-bottom: 2rem;
+        transition: color 0.15s;
+      }
+      .detail-back:hover {
+        color: var(--text);
+      }
+
+      .detail-layout {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 2.5rem;
+        align-items: start;
+      }
+      @media (max-width: 640px) {
+        .detail-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .detail-poster {
+        width: 100%;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+      }
+
+      .detail-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .detail-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+
+      .detail-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .badge {
+        font-size: 0.78rem;
+        font-weight: 500;
+        padding: 3px 10px;
+        border-radius: 20px;
+        background: var(--border);
+        color: var(--text-muted);
+      }
+      .badge-accent {
+        background: var(--accent-dim);
+        color: var(--accent);
+      }
+
+      .detail-plot {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        line-height: 1.65;
+        border-left: 3px solid var(--border);
+        padding-left: 1rem;
+      }
+
+      .detail-rows {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .detail-row {
+        display: flex;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+      }
+      .detail-row dt {
+        color: var(--text-muted);
+        min-width: 80px;
+      }
+      .detail-row dd {
+        color: var(--text);
+      }
+
+      .btn-watchlist-add {
+        background: var(--accent);
+        color: #111;
+        width: fit-content;
+      }
+      .btn-watchlist-remove {
+        background: var(--danger-dim);
+        border: 1px solid transparent;
+        color: var(--danger);
+        width: fit-content;
+      }
+      .btn-watchlist-remove:hover {
+        background: var(--danger);
+        color: #fff;
+      }
+
+      /* ── Watchlist page ── */
+      .page-heading {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.4rem;
+      }
+      .page-subheading {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+      }
+
+      .watchlist-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1.2rem;
+      }
+
+      .watchlist-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        position: relative;
+      }
+      .watchlist-card img,
+      .watchlist-card .poster-placeholder {
+        width: 100%;
+        aspect-ratio: 2/3;
+        object-fit: cover;
+        display: block;
+      }
+      .watchlist-card-info {
+        padding: 0.75rem;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 0.5rem;
+      }
+      .watchlist-card-title {
+        font-size: 0.88rem;
+        font-weight: 600;
+        line-height: 1.3;
+      }
+      .watchlist-card-year {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 5rem 0;
+      }
+      .empty-state .icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.4;
+      }
+      .empty-state h2 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+      .empty-state p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      /* ── Loading skeleton (shown as static example) ── */
+      .skeleton {
+        background: linear-gradient(
+          90deg,
+          var(--border) 25%,
+          var(--surface-hover) 50%,
+          var(--border) 75%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.4s infinite;
+        border-radius: 6px;
+      }
+      @keyframes shimmer {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+
+      .divider {
+        height: 1px;
+        background: var(--border);
+        margin: 2rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── Shared Header ── -->
+    <header>
+      <a class="logo" onclick="showPage('search')">Movie<span>Search</span></a>
+      <nav>
+        <a onclick="showPage('watchlist')" id="nav-watchlist">Watchlist</a>
+      </nav>
+    </header>
+
+    <!-- ══════════════════ PAGE: SEARCH ══════════════════ -->
+    <div class="page visible" id="page-search">
+      <main>
+        <div class="search-hero">
+          <h1>Find your next film</h1>
+          <p>Search millions of movies powered by OMDB</p>
+          <div class="search-bar">
+            <input
+              type="text"
+              placeholder="Search movies… e.g. Inception"
+              value="Inception"
+            />
+            <button class="btn btn-primary">Search</button>
+          </div>
+        </div>
+
+        <div class="results-label">
+          Showing <strong>10 results</strong> for "Inception"
+        </div>
+
+        <div class="movie-grid">
+          <!-- Cards with posters -->
+          <div class="movie-card" onclick="showPage('detail')">
+            <img
+              src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg"
+              alt="Inception"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+            />
+            <div class="poster-placeholder" style="display: none">🎬</div>
+            <div class="movie-card-info">
+              <div class="movie-card-title">Inception</div>
+              <div class="movie-card-year">2010</div>
+            </div>
+          </div>
+
+          <div class="movie-card" onclick="showPage('detail')">
+            <div class="poster-placeholder">🎬</div>
+            <div class="movie-card-info">
+              <div class="movie-card-title">Inception: The Cobol Job</div>
+              <div class="movie-card-year">2010</div>
+            </div>
+          </div>
+
+          <div class="movie-card" onclick="showPage('detail')">
+            <div class="poster-placeholder">🎬</div>
+            <div class="movie-card-info">
+              <div class="movie-card-title">Making of Inception</div>
+              <div class="movie-card-year">2010</div>
+            </div>
+          </div>
+
+          <div class="movie-card" onclick="showPage('detail')">
+            <div class="poster-placeholder">🎬</div>
+            <div class="movie-card-info">
+              <div class="movie-card-title">Interstellar</div>
+              <div class="movie-card-year">2014</div>
+            </div>
+          </div>
+
+          <div class="movie-card" onclick="showPage('detail')">
+            <div class="poster-placeholder">🎬</div>
+            <div class="movie-card-info">
+              <div class="movie-card-title">The Dark Knight</div>
+              <div class="movie-card-year">2008</div>
+            </div>
+          </div>
+
+          <!-- Loading skeleton example -->
+          <div class="movie-card" style="pointer-events: none">
+            <div class="poster-placeholder skeleton" style="background: none">
+              <span></span>
+            </div>
+            <div class="movie-card-info">
+              <div
+                class="skeleton"
+                style="height: 14px; width: 80%; margin-bottom: 6px"
+              ></div>
+              <div class="skeleton" style="height: 11px; width: 40%"></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- ══════════════════ PAGE: DETAIL ══════════════════ -->
+    <div class="page" id="page-detail">
+      <main>
+        <div class="detail-back" onclick="showPage('search')">
+          ← Back to results
+        </div>
+
+        <div class="detail-layout">
+          <!-- Poster -->
+          <div>
+            <img
+              class="detail-poster"
+              src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg"
+              alt="Inception"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+            />
+            <div
+              class="poster-placeholder"
+              style="display: none; border-radius: 10px; aspect-ratio: 2/3"
+            >
+              🎬
+            </div>
+          </div>
+
+          <!-- Info -->
+          <div class="detail-info">
+            <div class="detail-title">Inception</div>
+
+            <div class="detail-meta">
+              <span class="badge">2010</span>
+              <span class="badge">PG-13</span>
+              <span class="badge">2h 28m</span>
+              <span class="badge badge-accent">★ 8.8</span>
+              <span class="badge">Sci-Fi · Thriller</span>
+            </div>
+
+            <p class="detail-plot">
+              A thief who steals corporate secrets through the use of
+              dream-sharing technology is given the inverse task of planting an
+              idea into the mind of a C.E.O.
+            </p>
+
+            <dl class="detail-rows">
+              <div class="detail-row">
+                <dt>Director</dt>
+                <dd>Christopher Nolan</dd>
+              </div>
+              <div class="detail-row">
+                <dt>Stars</dt>
+                <dd>Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page</dd>
+              </div>
+              <div class="detail-row">
+                <dt>Released</dt>
+                <dd>16 Jul 2010</dd>
+              </div>
+              <div class="detail-row">
+                <dt>Country</dt>
+                <dd>United States, United Kingdom</dd>
+              </div>
+            </dl>
+
+            <!-- Watchlist toggle — two states shown separately -->
+            <div style="display: flex; flex-direction: column; gap: 0.6rem">
+              <button
+                class="btn btn-watchlist-add btn-primary"
+                id="btn-add"
+                onclick="toggleWatchlist()"
+                style="width: fit-content"
+              >
+                + Add to Watchlist
+              </button>
+              <button
+                class="btn btn-watchlist-remove btn-danger"
+                id="btn-remove"
+                onclick="toggleWatchlist()"
+                style="display: none; width: fit-content"
+              >
+                ✕ Remove from Watchlist
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- ══════════════════ PAGE: WATCHLIST ══════════════════ -->
+    <div class="page" id="page-watchlist">
+      <main>
+        <h1 class="page-heading">My Watchlist</h1>
+        <p class="page-subheading">3 saved movies</p>
+
+        <div class="watchlist-grid" id="watchlist-content">
+          <div class="watchlist-card">
+            <img
+              src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg"
+              alt="Inception"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+            />
+            <div class="poster-placeholder" style="display: none">🎬</div>
+            <div class="watchlist-card-info">
+              <div>
+                <div class="watchlist-card-title">Inception</div>
+                <div class="watchlist-card-year">2010</div>
+              </div>
+              <button class="btn btn-danger">Remove</button>
+            </div>
+          </div>
+
+          <div class="watchlist-card">
+            <div class="poster-placeholder">🎬</div>
+            <div class="watchlist-card-info">
+              <div>
+                <div class="watchlist-card-title">Interstellar</div>
+                <div class="watchlist-card-year">2014</div>
+              </div>
+              <button class="btn btn-danger">Remove</button>
+            </div>
+          </div>
+
+          <div class="watchlist-card">
+            <div class="poster-placeholder">🎬</div>
+            <div class="watchlist-card-info">
+              <div>
+                <div class="watchlist-card-title">The Dark Knight</div>
+                <div class="watchlist-card-year">2008</div>
+              </div>
+              <button class="btn btn-danger">Remove</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty state (hidden by default — toggle via button below for preview) -->
+        <div class="empty-state" id="empty-state" style="display: none">
+          <div class="icon">🎬</div>
+          <h2>Your watchlist is empty</h2>
+          <p>Search for movies and add them here</p>
+        </div>
+
+        <div class="divider"></div>
+        <button
+          class="btn btn-ghost"
+          style="font-size: 0.8rem"
+          onclick="toggleEmpty()"
+        >
+          Toggle empty state (preview only)
+        </button>
+      </main>
+    </div>
+
+    <!-- ── Page switcher (mockup nav) ── -->
+    <div class="page-tabs">
+      <button class="active" id="tab-search" onclick="showPage('search')">
+        / Search
+      </button>
+      <button id="tab-detail" onclick="showPage('detail')">/movie/[id]</button>
+      <button id="tab-watchlist" onclick="showPage('watchlist')">
+        /watchlist
+      </button>
+    </div>
+
+    <script>
+      function showPage(name) {
+        document
+          .querySelectorAll('.page')
+          .forEach((p) => p.classList.remove('visible'));
+        document
+          .querySelectorAll('.page-tabs button')
+          .forEach((b) => b.classList.remove('active'));
+        document.getElementById('page-' + name).classList.add('visible');
+        document.getElementById('tab-' + name).classList.add('active');
+      }
+
+      function toggleWatchlist() {
+        const add = document.getElementById('btn-add');
+        const remove = document.getElementById('btn-remove');
+        if (add.style.display === 'none') {
+          add.style.display = '';
+          remove.style.display = 'none';
+        } else {
+          add.style.display = 'none';
+          remove.style.display = '';
+        }
+      }
+
+      function toggleEmpty() {
+        const grid = document.getElementById('watchlist-content');
+        const empty = document.getElementById('empty-state');
+        const isShowing = empty.style.display === 'none';
+        grid.style.display = isShowing ? 'none' : 'grid';
+        empty.style.display = isShowing ? 'flex' : 'none';
+        document.querySelector('.page-subheading').textContent = isShowing
+          ? '0 saved movies'
+          : '3 saved movies';
+      }
+    </script>
+  </body>
+</html>
