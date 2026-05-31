@@ -1,6 +1,6 @@
 'use client';
 
-export default function Home() {
+export default function Home(): JSX.Element {
   return (
     <main className="min-h-screen p-8">
       <h1 className="text-2xl font-bold">App</h1>
