@@ -7,14 +7,20 @@ Brief: Take-home interview, 2-hour time limit
 
 ## Goal
 
-A minimal multi-page web app where a user can search for movies, view details, and manage a personal watchlist. Strictly scoped to the requirements — no extra features.
+A minimal multi-page web app where a user can search for movies, view details, and manage a personal watchlist. Strictly
+scoped to the requirements — no extra features.
+
+- Search for movies (powered by OMDB API)
+- Click a movie to view its details
+- Add/remove movies from a personal watchlist
+- View the saved watchlist
 
 ---
 
 ## Pages & Routing
 
 | Route         | File                          | Purpose                                    |
-| ------------- | ----------------------------- | ------------------------------------------ |
+|---------------|-------------------------------|--------------------------------------------|
 | `/`           | `src/app/page.tsx`            | Search bar + results grid                  |
 | `/movie/[id]` | `src/app/movie/[id]/page.tsx` | Movie detail + add/remove watchlist button |
 | `/watchlist`  | `src/app/watchlist/page.tsx`  | Saved movies list with remove buttons      |
@@ -26,7 +32,7 @@ A minimal header (site title link + Watchlist nav link) lives in `src/app/layout
 ## API Routes
 
 | Route                 | Method | Purpose                                          |
-| --------------------- | ------ | ------------------------------------------------ |
+|-----------------------|--------|--------------------------------------------------|
 | `/api/search?q=`      | GET    | Proxies OMDB `?s=` search, returns results array |
 | `/api/movie/[id]`     | GET    | Proxies OMDB `?i=` detail, returns single movie  |
 | `/api/watchlist`      | GET    | Returns contents of `src/db/watchlist.json`      |
@@ -39,10 +45,14 @@ Routes are thin: validate input → call `src/lib` function → return JSON.
 
 ## Library & Data Layer
 
-**`src/lib/omdb.ts`**
+**`src/lib/omdb-client.ts`** — raw OMDB HTTP wrapper; knows about the API URL, key, and response shape. Only file that
+imports from OMDB directly.
 
-- `searchMovies(query: string)` — OMDB `?s=query`, returns array of results
-- `getMovieById(id: string)` — OMDB `?i=id`, returns single movie object
+**`src/lib/movie-fetcher.ts`** — internal interface the rest of the app uses; calls into `omdb-client`. If OMDB is ever
+replaced, only `omdb-client.ts` changes.
+
+- `searchMovies(query: string)` — returns array of results
+- `getMovieById(id: string)` — returns single movie object
 
 **`src/lib/watchlist.ts`**
 
@@ -62,7 +72,7 @@ Routes are thin: validate input → call `src/lib` function → return JSON.
 ## Components
 
 | Component         | File                                 | Purpose                                      |
-| ----------------- | ------------------------------------ | -------------------------------------------- |
+|-------------------|--------------------------------------|----------------------------------------------|
 | `Header`          | `src/components/Header.tsx`          | Site title + Watchlist nav link              |
 | `SearchBar`       | `src/components/SearchBar.tsx`       | Controlled input + submit                    |
 | `MovieCard`       | `src/components/MovieCard.tsx`       | Poster, title, year — links to `/movie/[id]` |
@@ -82,11 +92,11 @@ Routes are thin: validate input → call `src/lib` function → return JSON.
 
 Each feature follows: **design → failing test → implement (lib → route → UI) → verify in browser → commit**
 
-| Feature             | Failing test                              | Scope                                                      |
-| ------------------- | ----------------------------------------- | ---------------------------------------------------------- |
-| **A: Movie Search** | `searchMovies()` returns array from OMDB  | `src/lib/omdb.ts` + `/api/search` + search page            |
-| **B: Movie Detail** | `getMovieById()` returns single movie     | `src/lib/omdb.ts` + `/api/movie/[id]` + detail page        |
-| **C: Watchlist**    | add/remove/get persists correctly to JSON | `src/lib/watchlist.ts` + `/api/watchlist` + watchlist page |
+| Feature             | Failing test                              | Scope                                                                                   |
+|---------------------|-------------------------------------------|-----------------------------------------------------------------------------------------|
+| **A: Movie Search** | `searchMovies()` returns array from OMDB  | `src/lib/omdb-client.ts` + `src/lib/movie-fetcher.ts` + `/api/search` + search page     |
+| **B: Movie Detail** | `getMovieById()` returns single movie     | `src/lib/omdb-client.ts` + `src/lib/movie-fetcher.ts` + `/api/movie/[id]` + detail page |
+| **C: Watchlist**    | add/remove/get persists correctly to JSON | `src/lib/watchlist.ts` + `/api/watchlist` + watchlist page                              |
 
 ### Phase 2 — Wire & finish (~15 min)
 
