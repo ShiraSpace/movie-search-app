@@ -1,5 +1,8 @@
 @AGENTS.md
 
+# Skill Usage
+Before invoking any superpowers skill, ask the user for approval first. Do not auto-trigger skills.
+
 ## Code Style Guidelines
 
 ### Mandatory Code Standards
@@ -48,9 +51,17 @@
 - **Next.js 16 App Router** — all routes live under `src/app/`
 - **`src/app/page.tsx`** — main UI shell, mark `"use client"` if it uses state or events
 - **`src/app/api/`** — one folder per API endpoint (e.g. `src/app/api/search/route.ts`)
-- **`src/components/`** — shared UI components; add `"use client"` to any that use state/events
 - **`src/lib/`** — all business logic, framework-agnostic; this is what gets unit-tested
 - **`src/db/`** — persistence layer (DB file, storage module, etc.)
+- **`src/components/`** — shared UI components; add `"use client"` to any that use state/events
+Each component lives in its own folder: 
+```
+src/components/
+MyComponent/
+MyComponent.tsx       ← component implementation
+MyComponent.test.tsx  ← dedicated test file
+index.ts              ← named re-export only
+```
 
 ### Key Rule: Keep API Routes Thin
 

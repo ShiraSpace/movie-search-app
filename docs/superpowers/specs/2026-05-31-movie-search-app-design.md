@@ -20,7 +20,7 @@ scoped to the requirements — no extra features.
 ## Pages & Routing
 
 | Route         | File                          | Purpose                                    |
-|---------------|-------------------------------|--------------------------------------------|
+| ------------- | ----------------------------- | ------------------------------------------ |
 | `/`           | `src/app/page.tsx`            | Search bar + results grid                  |
 | `/movie/[id]` | `src/app/movie/[id]/page.tsx` | Movie detail + add/remove watchlist button |
 | `/watchlist`  | `src/app/watchlist/page.tsx`  | Saved movies list with remove buttons      |
@@ -32,7 +32,7 @@ A minimal header (site title link + Watchlist nav link) lives in `src/app/layout
 ## API Routes
 
 | Route                 | Method | Purpose                                          |
-|-----------------------|--------|--------------------------------------------------|
+| --------------------- | ------ | ------------------------------------------------ |
 | `/api/search?q=`      | GET    | Proxies OMDB `?s=` search, returns results array |
 | `/api/movie/[id]`     | GET    | Proxies OMDB `?i=` detail, returns single movie  |
 | `/api/watchlist`      | GET    | Returns contents of `src/db/watchlist.json`      |
@@ -72,7 +72,7 @@ replaced, only `omdb-client.ts` changes.
 ## Components
 
 | Component         | File                                 | Purpose                                      |
-|-------------------|--------------------------------------|----------------------------------------------|
+| ----------------- | ------------------------------------ | -------------------------------------------- |
 | `Header`          | `src/components/Header.tsx`          | Site title + Watchlist nav link              |
 | `SearchBar`       | `src/components/SearchBar.tsx`       | Controlled input + submit                    |
 | `MovieCard`       | `src/components/MovieCard.tsx`       | Poster, title, year — links to `/movie/[id]` |
@@ -93,7 +93,7 @@ replaced, only `omdb-client.ts` changes.
 Each feature follows: **design → failing test → implement (lib → route → UI) → verify in browser → commit**
 
 | Feature             | Failing test                              | Scope                                                                                   |
-|---------------------|-------------------------------------------|-----------------------------------------------------------------------------------------|
+| ------------------- | ----------------------------------------- | --------------------------------------------------------------------------------------- |
 | **A: Movie Search** | `searchMovies()` returns array from OMDB  | `src/lib/omdb-client.ts` + `src/lib/movie-fetcher.ts` + `/api/search` + search page     |
 | **B: Movie Detail** | `getMovieById()` returns single movie     | `src/lib/omdb-client.ts` + `src/lib/movie-fetcher.ts` + `/api/movie/[id]` + detail page |
 | **C: Watchlist**    | add/remove/get persists correctly to JSON | `src/lib/watchlist.ts` + `/api/watchlist` + watchlist page                              |
@@ -104,6 +104,20 @@ Each feature follows: **design → failing test → implement (lib → route →
 - WatchlistButton on detail page calls watchlist API
 - README: fill in assumptions + setup instructions
 - Final browser check
+
+---
+
+## Error & Loading Strategy
+
+- **Prefer Next.js file conventions** (`loading.tsx` / `error.tsx`) — drop one next to each `page.tsx` and Suspense handles it automatically.
+- **Fall back to local state** (`isLoading`, `error` booleans) only for client-side interactions that can't use file conventions (e.g. the `WatchlistButton` add/remove toggle).
+
+| Page / Component                  | Mechanism                         |
+| --------------------------------- | --------------------------------- |
+| Search page (`/`)                 | `loading.tsx` + `error.tsx`       |
+| Movie detail (`/movie/[id]`)      | `loading.tsx` + `error.tsx`       |
+| Watchlist page (`/watchlist`)     | `loading.tsx` + `error.tsx`       |
+| `WatchlistButton` (client toggle) | local `isLoading` / `error` state |
 
 ---
 
