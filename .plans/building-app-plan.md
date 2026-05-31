@@ -49,6 +49,13 @@ All UI components must match the mockup exactly. Use CSS custom properties defin
 
 ---
 
+## Coding Standards (enforced throughout)
+
+- **Constants**: every component gets a co-located `constants.ts` — test IDs and content strings live there; both the
+  component and its test import from it
+- **Tailwind CSS**: utility classes only, no inline `style={{}}` props; CSS variables via `bg-(--token)` shorthand;
+  prefer scale values (`h-15`) over arbitrary values (`h-[60px]`)
+
 ## Phase 0 — Foundation
 
 - [ ] Add ESLint + eslint-plugin-prettier, create `.eslintrc`
