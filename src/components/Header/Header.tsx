@@ -1,31 +1,28 @@
 import Link from 'next/link';
+import { JSX } from 'react';
+import { HEADER_CONTENT, HEADER_TEST_IDS } from './constants';
 
 export const Header = (): JSX.Element => {
   return (
     <header
-      data-testid="header"
-      className="sticky top-0 z-[100] flex h-[60px] items-center justify-between px-8"
-      style={{
-        backgroundColor: 'var(--surface)',
-        borderBottom: '1px solid var(--border)',
-      }}
+      data-testid={HEADER_TEST_IDS.header}
+      className="sticky top-0 z-100 flex h-15 items-center justify-between border-b border-(--border) bg-(--surface) px-8"
     >
       <Link
-        href="/"
-        data-testid="header-title"
-        className="text-xl font-bold tracking-tight"
-        style={{ color: 'var(--accent)' }}
+        href={HEADER_CONTENT.titleHref}
+        data-testid={HEADER_TEST_IDS.title}
+        className="text-xl font-bold tracking-tight text-(--accent)"
       >
-        Movie<span style={{ color: 'var(--text)' }}>Search</span>
+        {HEADER_CONTENT.titlePrefix}
+        <span className="text-(--text)">{HEADER_CONTENT.titleSuffix}</span>
       </Link>
       <nav>
         <Link
-          href="/watchlist"
-          data-testid="header-watchlist-link"
-          className="rounded-md px-3 py-1.5 text-sm font-medium transition-colors"
-          style={{ color: 'var(--text-muted)' }}
+          href={HEADER_CONTENT.watchlistHref}
+          data-testid={HEADER_TEST_IDS.watchlistLink}
+          className="rounded-md px-3 py-1.5 text-sm font-medium text-(--text-muted) transition-colors"
         >
-          Watchlist
+          {HEADER_CONTENT.watchlistLabel}
         </Link>
       </nav>
     </header>

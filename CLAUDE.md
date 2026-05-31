@@ -1,6 +1,7 @@
 @AGENTS.md
 
 # Skill Usage
+
 Before invoking any superpowers skill, ask the user for approval first. Do not auto-trigger skills.
 
 ## Code Style Guidelines
@@ -24,11 +25,19 @@ Before invoking any superpowers skill, ask the user for approval first. Do not a
 
 - Each component has a dedicated test file
 - Use `data-testid` for element selection in tests
-- Store test IDs and content in constants file
+- Store test IDs and content in a `constants.ts` file co-located with the component (e.g. `src/components/Header/constants.ts`) — never hardcode strings directly in test files
+- The component itself must also import test IDs from the same constants file — `data-testid` values must not be duplicated between the component and its test
 - Place `render()` in `beforeEach` block
 - Use `getByTestId` for element queries
 - Mock dependencies appropriately
 - Use centralized mocks in `__mocks__/` directory for shared module mocks (e.g., `__mocks__/next/image.tsx`) — do not duplicate `jest.mock()` calls across test files
+
+### Tailwind CSS
+
+- Use Tailwind utility classes exclusively — no inline `style={{}}` props
+- Reference CSS custom properties via Tailwind's shorthand: `bg-(--surface)`, `text-(--accent)`, `border-(--border)` — not `bg-[var(--surface)]`
+- Prefer built-in Tailwind scale values over arbitrary values when equivalent: `h-15` not `h-[60px]`, `z-100` not `z-[100]`
+- CSS custom properties (design tokens) are defined in `src/app/globals.css` — do not redeclare them inline
 
 ### Code Formatting
 
@@ -54,7 +63,8 @@ Before invoking any superpowers skill, ask the user for approval first. Do not a
 - **`src/lib/`** — all business logic, framework-agnostic; this is what gets unit-tested
 - **`src/db/`** — persistence layer (DB file, storage module, etc.)
 - **`src/components/`** — shared UI components; add `"use client"` to any that use state/events
-Each component lives in its own folder: 
+  Each component lives in its own folder:
+
 ```
 src/components/
 MyComponent/
@@ -100,7 +110,7 @@ export async function GET(req: Request): Promise<Response> {
 6. Wire up the UI component
 7. Verify in the browser
 8. update readme and the plan.mp files with the progress
-8. Commit: `git commit -m "feat: [feature name]"`
+9. Commit: `git commit -m "feat: [feature name]"`
 
 ### Code Quality Checklist (before submitting)
 
@@ -117,15 +127,15 @@ export async function GET(req: Request): Promise<Response> {
 **2. Importing a Server Component into a Client Component** — breaks at runtime. Pass server content as `children` instead.
 
 **3. Fetch caching** — Next.js may cache `fetch()` calls. For calls that must be fresh:
+
 ```ts
 fetch(url, { cache: 'no-store' });
 ```
 
 ### What should be kept
 
-| Dimension | What to check for                                                                                 |
-|-----------|---------------------------------------------------------------------------------------------------|
-| **It works** | All features run on a fresh clone; error states handled                                           |
+| Dimension        | What to check for                                                                                 |
+| ---------------- | ------------------------------------------------------------------------------------------------- |
+| **It works**     | All features run on a fresh clone; error states handled                                           |
 | **Architecture** | Clear FE / API / lib separation; intentional choices                                              |
 | **Code quality** | Keeping each method concise, clear, readable, doing one thing, aligns with clean code guidelines. |
-

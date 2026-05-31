@@ -6,7 +6,7 @@ interface LinkProps {
   [key: string]: unknown;
 }
 
-export const Link = ({ href, children, ...props }: LinkProps): JSX.Element => (
+const Link = ({ href, children, ...props }: LinkProps): React.JSX.Element => (
   <a href={href} {...props}>
     {children}
   </a>
