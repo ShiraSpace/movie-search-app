@@ -25,30 +25,35 @@ Before invoking any superpowers skill, ask the user for approval first. Do not a
 
 - Each component has a dedicated test file
 - Use `data-testid` for element selection in tests
-- Store test IDs and content in a `constants.ts` file co-located with the component (e.g. `src/components/Header/constants.ts`) — never hardcode strings directly in test files
-- The component itself must also import test IDs from the same constants file — `data-testid` values must not be duplicated between the component and its test
+- Store test IDs and content in a `constants.ts` file co-located with the component (e.g.
+  `src/components/Header/constants.ts`) — never hardcode strings directly in test files
+- The component itself must also import test IDs from the same constants file — `data-testid` values must not be
+  duplicated between the component and its test
 - Place `render()` in `beforeEach` block
 - Use `getByTestId` for element queries
 - Mock dependencies appropriately
-- Use centralized mocks in `__mocks__/` directory for shared module mocks (e.g., `__mocks__/next/image.tsx`) — do not duplicate `jest.mock()` calls across test files
+- Use centralized mocks in `__mocks__/` directory for shared module mocks (e.g., `__mocks__/next/image.tsx`) — do not
+  duplicate `jest.mock()` calls across test files
 
 ### Tailwind CSS
 
 - Use Tailwind utility classes exclusively — no inline `style={{}}` props
-- Reference CSS custom properties via Tailwind's shorthand: `bg-(--surface)`, `text-(--accent)`, `border-(--border)` — not `bg-[var(--surface)]`
-- Prefer built-in Tailwind scale values over arbitrary values when equivalent: `h-15` not `h-[60px]`, `z-100` not `z-[100]`
+- Reference CSS custom properties via Tailwind's shorthand: `bg-(--surface)`, `text-(--accent)`, `border-(--border)` —
+  not `bg-[var(--surface)]`
+- Prefer built-in Tailwind scale values over arbitrary values when equivalent: `h-15` not `h-[60px]`, `z-100` not
+  `z-[100]`
 - CSS custom properties (design tokens) are defined in `src/app/globals.css` — do not redeclare them inline
 
 ### Code Formatting
 
 - **Prettier** is configured for automatic code formatting
 - Configuration (`.prettierrc`):
-  - Single quotes for strings (`singleQuote: true`)
-  - Semicolons required (`semi: true`)
-  - Tab width: 2 spaces
-  - Print width: 100 characters
-  - Trailing commas: ES5 style
-  - Arrow function parentheses: always
+    - Single quotes for strings (`singleQuote: true`)
+    - Semicolons required (`semi: true`)
+    - Tab width: 2 spaces
+    - Print width: 100 characters
+    - Trailing commas: ES5 style
+    - Arrow function parentheses: always
 - Integrated with ESLint via `eslint-plugin-prettier`
 - Formatting happens automatically when running `npm run lint`
 - ESLint will both check and fix code style and formatting issues
@@ -79,13 +84,13 @@ API routes should only: validate input → call a `src/lib` function → return 
 
 ```ts
 // src/app/api/search/route.ts
-import { searchMovies } from '@/lib/movies';
+import {searchMovies} from '@/lib/movies';
 
 export async function GET(req: Request): Promise<Response> {
-  const { searchParams } = new URL(req.url);
-  const query = searchParams.get('q') ?? '';
-  const results = await searchMovies(query);
-  return Response.json(results);
+    const {searchParams} = new URL(req.url);
+    const query = searchParams.get('q') ?? '';
+    const results = await searchMovies(query);
+    return Response.json(results);
 }
 ```
 
@@ -108,9 +113,11 @@ export async function GET(req: Request): Promise<Response> {
 4. Run `npm test` — confirm it **passes**
 5. Write the thin API route in `src/app/api/`
 6. Wire up the UI component
-7. Verify in the browser
-8. update readme and the plan.mp files with the progress
-9. Commit: `git commit -m "feat: [feature name]"`
+7. Run code review
+8. Verify failing test pass 
+9. Verify in the browser by user 
+10. update readme and the plan.mp files with the progress 
+11. Commit: `git commit -m "feat: [feature name]"`
 
 ### Code Quality Checklist (before submitting)
 
@@ -118,24 +125,27 @@ export async function GET(req: Request): Promise<Response> {
 - [ ] Loading states shown while data is fetching
 - [ ] README has working setup instructions a stranger can follow
 - [ ] `npm run dev` works on a fresh clone
-- [ ] If the brief requires API keys: stored in `.env.local` (never committed), `.env.example` has key names with empty values
+- [ ] If the brief requires API keys: stored in `.env.local` (never committed), `.env.example` has key names with empty
+  values
 
 ### Next.js 16 Pitfalls
 
-**1. Missing `"use client"`** — any component using `useState`, `useEffect`, `onClick`, or browser APIs needs `"use client"` at the top. Without it you get a cryptic runtime error.
+**1. Missing `"use client"`** — any component using `useState`, `useEffect`, `onClick`, or browser APIs needs
+`"use client"` at the top. Without it you get a cryptic runtime error.
 
-**2. Importing a Server Component into a Client Component** — breaks at runtime. Pass server content as `children` instead.
+**2. Importing a Server Component into a Client Component** — breaks at runtime. Pass server content as `children`
+instead.
 
 **3. Fetch caching** — Next.js may cache `fetch()` calls. For calls that must be fresh:
 
 ```ts
-fetch(url, { cache: 'no-store' });
+fetch(url, {cache: 'no-store'});
 ```
 
 ### What should be kept
 
 | Dimension        | What to check for                                                                                 |
-| ---------------- | ------------------------------------------------------------------------------------------------- |
+|------------------|---------------------------------------------------------------------------------------------------|
 | **It works**     | All features run on a fresh clone; error states handled                                           |
 | **Architecture** | Clear FE / API / lib separation; intentional choices                                              |
 | **Code quality** | Keeping each method concise, clear, readable, doing one thing, aligns with clean code guidelines. |

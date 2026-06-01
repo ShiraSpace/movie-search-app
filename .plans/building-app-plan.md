@@ -67,28 +67,46 @@ All UI components must match the mockup exactly. Use CSS custom properties defin
 
 ## Phase 1 — Features (parallel)
 
-### A: Movie Search
+### A: Movie Search ✅
 
-- [ ] Write failing test: `searchMovies()` returns results array
-- [ ] Implement `src/lib/omdb-client.ts` + `src/lib/movie-fetcher.ts`
-- [ ] Implement `src/app/api/search/route.ts`
-- [ ] Implement search page (`src/app/page.tsx`) + `SearchBar` + `MovieCard`
-- [ ] Verify in browser, commit
+- [x] Write failing test: `searchMovies()` returns results array
+- [x] Implement `src/lib/omdb-client.ts` + `src/lib/movie-fetcher.ts`
+- [x] Implement `src/app/api/search/route.ts`
+- [x] Implement search page (`src/app/page.tsx`) + `SearchBar` + `MovieCard` + `SearchHero` + `SearchResults` + `useMovieSearch`
+- [x] Run code review
+- [x] Verify tests pass and actually check the flow
+- [X] Verify in browser
+- [x] Update plan
+- [x] Commit, merge, push
 
 ### B: Movie Detail
 
 - [ ] Write failing test: `getMovieById()` returns single movie
+- [ ] Run `npm test` — confirm it fails
+- [ ] Implement `src/lib/movie-detail.ts`
+- [ ] Run `npm test` — confirm it passes
 - [ ] Implement `src/app/api/movie/[id]/route.ts`
-- [ ] Implement `src/app/movie/[id]/page.tsx` + `WatchlistButton`
-- [ ] Verify in browser, commit
+- [ ] Implement `src/app/movie/[id]/page.tsx` (title, year, poster, plot, genre, rating)
+- [ ] Run code review
+- [ ] Verify tests pass and actually check the flow
+- [ ] Verify in browser
+- [ ] Update plan
+- [ ] Commit, merge, push
 
 ### C: Watchlist
 
 - [ ] Write failing test: add/remove/get persists correctly to JSON
+- [ ] Run `npm test` — confirm it fails
 - [ ] Implement `src/lib/watchlist.ts`
+- [ ] Run `npm test` — confirm it passes
 - [ ] Implement `src/app/api/watchlist/route.ts` + `src/app/api/watchlist/[id]/route.ts`
 - [ ] Implement `src/app/watchlist/page.tsx`
-- [ ] Verify in browser, commit
+- [ ] Add `WatchlistButton` to movie detail page (depends on C being complete)
+- [ ] Run code review
+- [ ] Verify tests pass and actually check the flow
+- [ ] Verify in browser
+- [ ] Update plan
+- [ ] Commit, merge, push
 
 ## Phase 2 — Wire & Finish
 
