@@ -23,6 +23,7 @@ const MOCK_OMDB_RESPONSE = {
 
 describe('searchMovies', () => {
   beforeEach(() => {
+    process.env.OMDB_API_KEY = 'test-key';
     global.fetch = jest.fn();
   });
 
