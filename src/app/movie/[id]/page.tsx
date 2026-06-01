@@ -2,10 +2,12 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { JSX } from 'react';
 import { getMovieById } from '@/lib/movie-detail';
+import { isInWatchlist } from '@/lib/watchlist';
 import { MovieBadges } from '@/components/MovieBadges';
 import { MovieCredits } from '@/components/MovieCredits';
 import { MoviePlot } from '@/components/MoviePlot';
 import { MoviePoster } from '@/components/MoviePoster';
+import { WatchlistButton } from '@/components/WatchlistButton';
 
 export default async function MovieDetailPage({
   params,
@@ -13,7 +15,10 @@ export default async function MovieDetailPage({
   params: Promise<{ id: string }>;
 }): Promise<JSX.Element> {
   const { id } = await params;
-  const movie = await getMovieById(id);
+  const [movie, inWatchlist] = await Promise.all([
+    getMovieById(id),
+    Promise.resolve(isInWatchlist(id)),
+  ]);
 
   if (!movie) notFound();
 
@@ -46,6 +51,15 @@ export default async function MovieDetailPage({
             actors={movie.Actors}
             released={movie.Released}
             country={movie.Country}
+          />
+          <WatchlistButton
+            movie={{
+              imdbID: movie.imdbID,
+              Title: movie.Title,
+              Year: movie.Year,
+              Poster: movie.Poster,
+            }}
+            initialInWatchlist={inWatchlist}
           />
         </div>
       </div>

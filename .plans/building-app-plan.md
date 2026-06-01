@@ -94,13 +94,13 @@ All UI components must match the mockup exactly. Use CSS custom properties defin
 
 ### C: Watchlist
 
-- [ ] Write failing test: add/remove/get persists correctly to JSON
-- [ ] Run `npm test` — confirm it fails
-- [ ] Implement `src/lib/watchlist.ts`
-- [ ] Run `npm test` — confirm it passes
-- [ ] Implement `src/app/api/watchlist/route.ts` + `src/app/api/watchlist/[id]/route.ts`
-- [ ] Implement `src/app/watchlist/page.tsx`
-- [ ] Add `WatchlistButton` to movie detail page (depends on C being complete)
+- [x] Write failing test: add/remove/get persists correctly to JSON
+- [x] Run `npm test` — confirm it fails
+- [x] Implement `src/lib/watchlist.ts`
+- [x] Run `npm test` — confirm it passes
+- [x] Implement `src/app/api/watchlist/route.ts` + `src/app/api/watchlist/[id]/route.ts`
+- [x] Implement `src/app/watchlist/page.tsx`
+- [x] Add `WatchlistButton` to movie detail page
 - [ ] Run code review
 - [ ] Verify tests pass and actually check the flow
 - [ ] Verify in browser

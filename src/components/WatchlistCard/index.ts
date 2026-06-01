@@ -1,0 +1,1 @@
+export { WatchlistCard } from './WatchlistCard';
