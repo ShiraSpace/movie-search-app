@@ -4,10 +4,11 @@
 
 1. Clone the repo
 2. Install dependencies: `npm install`
-3. Start the dev server: `npm run dev`
-4. Open `http://localhost:3000`
+3. Create your local env file: `cp .env.example .env.dev` and fill in `OMDB_API_KEY`
+4. Start the dev server: `npm run dev`
+5. Open `http://localhost:3000`
 
-> If the app requires API keys or secrets, copy `.env.example` to `.env.local` and fill in the values before running.
+> `.env.dev` is gitignored — you must create it on every new machine or worktree. Without it the app starts but all movie searches fail with a logged server error.
 
 ## Assumptions
 

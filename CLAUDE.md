@@ -48,12 +48,12 @@ Before invoking any superpowers skill, ask the user for approval first. Do not a
 
 - **Prettier** is configured for automatic code formatting
 - Configuration (`.prettierrc`):
-    - Single quotes for strings (`singleQuote: true`)
-    - Semicolons required (`semi: true`)
-    - Tab width: 2 spaces
-    - Print width: 100 characters
-    - Trailing commas: ES5 style
-    - Arrow function parentheses: always
+  - Single quotes for strings (`singleQuote: true`)
+  - Semicolons required (`semi: true`)
+  - Tab width: 2 spaces
+  - Print width: 100 characters
+  - Trailing commas: ES5 style
+  - Arrow function parentheses: always
 - Integrated with ESLint via `eslint-plugin-prettier`
 - Formatting happens automatically when running `npm run lint`
 - ESLint will both check and fix code style and formatting issues
@@ -84,13 +84,13 @@ API routes should only: validate input → call a `src/lib` function → return 
 
 ```ts
 // src/app/api/search/route.ts
-import {searchMovies} from '@/lib/movies';
+import { searchMovies } from '@/lib/movies';
 
 export async function GET(req: Request): Promise<Response> {
-    const {searchParams} = new URL(req.url);
-    const query = searchParams.get('q') ?? '';
-    const results = await searchMovies(query);
-    return Response.json(results);
+  const { searchParams } = new URL(req.url);
+  const query = searchParams.get('q') ?? '';
+  const results = await searchMovies(query);
+  return Response.json(results);
 }
 ```
 
@@ -114,10 +114,21 @@ export async function GET(req: Request): Promise<Response> {
 5. Write the thin API route in `src/app/api/`
 6. Wire up the UI component
 7. Run code review
-8. Verify failing test pass 
-9. Verify in the browser by user 
-10. update readme and the plan.mp files with the progress 
+8. Verify failing test pass
+9. Verify in the browser by user
+10. update readme and the plan.mp files with the progress
 11. Commit: `git commit -m "feat: [feature name]"`
+
+### Local environment setup
+
+**IMPORTANT:** The project requires a `.env.dev` file in the repo root with the OMDB API key:
+
+```
+OMDB_API_KEY=<your-key-here>
+```
+
+This file is gitignored and must be created manually on every new machine or worktree.
+Copy `.env.example` as a starting point: `cp .env.example .env.dev`.
 
 ### Code Quality Checklist (before submitting)
 
@@ -125,8 +136,8 @@ export async function GET(req: Request): Promise<Response> {
 - [ ] Loading states shown while data is fetching
 - [ ] README has working setup instructions a stranger can follow
 - [ ] `npm run dev` works on a fresh clone
-- [ ] If the brief requires API keys: stored in `.env.local` (never committed), `.env.example` has key names with empty
-  values
+- [ ] If the brief requires API keys: stored in `.env.dev` (never committed), `.env.example` has key names with empty
+      values
 
 ### Next.js 16 Pitfalls
 
@@ -139,13 +150,13 @@ instead.
 **3. Fetch caching** — Next.js may cache `fetch()` calls. For calls that must be fresh:
 
 ```ts
-fetch(url, {cache: 'no-store'});
+fetch(url, { cache: 'no-store' });
 ```
 
 ### What should be kept
 
 | Dimension        | What to check for                                                                                 |
-|------------------|---------------------------------------------------------------------------------------------------|
+| ---------------- | ------------------------------------------------------------------------------------------------- |
 | **It works**     | All features run on a fresh clone; error states handled                                           |
 | **Architecture** | Clear FE / API / lib separation; intentional choices                                              |
 | **Code quality** | Keeping each method concise, clear, readable, doing one thing, aligns with clean code guidelines. |
