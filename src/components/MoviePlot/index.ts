@@ -1,0 +1,1 @@
+export { MoviePlot } from './MoviePlot';

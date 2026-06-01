@@ -1,0 +1,1 @@
+export { MovieCredits } from './MovieCredits';

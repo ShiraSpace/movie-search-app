@@ -75,22 +75,21 @@ All UI components must match the mockup exactly. Use CSS custom properties defin
 - [x] Implement search page (`src/app/page.tsx`) + `SearchBar` + `MovieCard` + `SearchHero` + `SearchResults` + `useMovieSearch`
 - [x] Run code review
 - [x] Verify tests pass and actually check the flow
-- [X] Verify in browser
+- [x] Verify in browser
 - [x] Update plan
 - [x] Commit, merge, push
 
-### B: Movie Detail
+### B: Movie Detail ✅
 
-- [ ] Write failing test: `getMovieById()` returns single movie
-- [ ] Run `npm test` — confirm it fails
-- [ ] Implement `src/lib/movie-detail.ts`
-- [ ] Run `npm test` — confirm it passes
-- [ ] Implement `src/app/api/movie/[id]/route.ts`
-- [ ] Implement `src/app/movie/[id]/page.tsx` (title, year, poster, plot, genre, rating)
-- [ ] Run code review
-- [ ] Verify tests pass and actually check the flow
-- [ ] Verify in browser
-- [ ] Update plan
+- [x] Write failing test: `getMovieById()` returns single movie
+- [x] Run `npm test` — confirm it fails
+- [x] Implement `src/lib/movie-detail.ts`
+- [x] Run `npm test` — confirm it passes
+- [x] Implement `src/app/api/movie/[id]/route.ts`
+- [x] Implement `src/app/movie/[id]/page.tsx` composed of `MoviePoster`, `MovieBadges`, `MoviePlot`, `MovieCredits`
+- [x] Verify tests pass and actually check the flow
+- [x] Verify in browser
+- [x] Update plan
 - [ ] Commit, merge, push
 
 ### C: Watchlist
