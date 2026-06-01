@@ -15,39 +15,37 @@ const MOVIE = {
 
 describe('WatchlistButton', () => {
   beforeEach(() => {
-    global.fetch = jest.fn().mockResolvedValue({ ok: true });
+    localStorage.clear();
   });
 
-  afterEach(() => {
-    jest.resetAllMocks();
-  });
-
-  it('shows add button when not in watchlist', () => {
-    render(<WatchlistButton movie={MOVIE} initialInWatchlist={false} />);
+  it('shows add button when movie is not in watchlist', () => {
+    render(<WatchlistButton movie={MOVIE} />);
     expect(
       screen.getByTestId(WATCHLIST_BUTTON_TEST_IDS.addButton)
     ).toHaveTextContent(WATCHLIST_BUTTON_LABELS.add);
   });
 
-  it('shows remove button when already in watchlist', () => {
-    render(<WatchlistButton movie={MOVIE} initialInWatchlist={true} />);
+  it('shows remove button when movie is already in localStorage', () => {
+    localStorage.setItem('movie-watchlist', JSON.stringify([MOVIE]));
+    render(<WatchlistButton movie={MOVIE} />);
     expect(
       screen.getByTestId(WATCHLIST_BUTTON_TEST_IDS.removeButton)
     ).toHaveTextContent(WATCHLIST_BUTTON_LABELS.remove);
   });
 
-  it('switches to remove button after adding', async () => {
+  it('switches to remove button after clicking add', async () => {
     const user = userEvent.setup();
-    render(<WatchlistButton movie={MOVIE} initialInWatchlist={false} />);
+    render(<WatchlistButton movie={MOVIE} />);
     await user.click(screen.getByTestId(WATCHLIST_BUTTON_TEST_IDS.addButton));
     expect(
       screen.getByTestId(WATCHLIST_BUTTON_TEST_IDS.removeButton)
     ).toBeInTheDocument();
   });
 
-  it('switches to add button after removing', async () => {
+  it('switches to add button after clicking remove', async () => {
+    localStorage.setItem('movie-watchlist', JSON.stringify([MOVIE]));
     const user = userEvent.setup();
-    render(<WatchlistButton movie={MOVIE} initialInWatchlist={true} />);
+    render(<WatchlistButton movie={MOVIE} />);
     await user.click(
       screen.getByTestId(WATCHLIST_BUTTON_TEST_IDS.removeButton)
     );
@@ -56,25 +54,23 @@ describe('WatchlistButton', () => {
     ).toBeInTheDocument();
   });
 
-  it('calls POST /api/watchlist when adding', async () => {
+  it('persists add to localStorage', async () => {
     const user = userEvent.setup();
-    render(<WatchlistButton movie={MOVIE} initialInWatchlist={false} />);
+    render(<WatchlistButton movie={MOVIE} />);
     await user.click(screen.getByTestId(WATCHLIST_BUTTON_TEST_IDS.addButton));
-    expect(global.fetch).toHaveBeenCalledWith(
-      '/api/watchlist',
-      expect.objectContaining({ method: 'POST' })
-    );
+    const stored = JSON.parse(localStorage.getItem('movie-watchlist')!);
+    expect(stored).toHaveLength(1);
+    expect(stored[0].imdbID).toBe('tt1375666');
   });
 
-  it('calls DELETE /api/watchlist/:id when removing', async () => {
+  it('persists remove to localStorage', async () => {
+    localStorage.setItem('movie-watchlist', JSON.stringify([MOVIE]));
     const user = userEvent.setup();
-    render(<WatchlistButton movie={MOVIE} initialInWatchlist={true} />);
+    render(<WatchlistButton movie={MOVIE} />);
     await user.click(
       screen.getByTestId(WATCHLIST_BUTTON_TEST_IDS.removeButton)
     );
-    expect(global.fetch).toHaveBeenCalledWith(
-      '/api/watchlist/tt1375666',
-      expect.objectContaining({ method: 'DELETE' })
-    );
+    const stored = JSON.parse(localStorage.getItem('movie-watchlist')!);
+    expect(stored).toHaveLength(0);
   });
 });

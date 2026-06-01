@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { JSX, useState } from 'react';
-import type { WatchlistItem } from '@/lib/watchlist';
+import type { WatchlistItem } from '@/lib/useWatchlist';
 import { WATCHLIST_CARD_TEST_IDS } from './constants';
 
 interface WatchlistCardProps {
